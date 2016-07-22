@@ -4,10 +4,20 @@ class Edge:
     _start = ''
     _end = ''
     _style = ''
+    
+    def __init__(self, start, end):
+        self._start = start
+        self._end = end
 
     def __repr__(self):
-        return "\\Edge[style=%s](%s)(%s)" %\
-                (self._style, self._start, self._end)
+        if self._style != '':
+            return "\\Edge[style=%s](%s)(%s)" %\
+                    (self._style, self._start, self._end)
+        else:
+            return "\\Edge(%s)(%s)" %\
+                    (self._start, self._end)
+ 
+
 
     def length(self):
         dx = self._start._x_location - self._end._x_location
