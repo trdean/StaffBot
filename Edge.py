@@ -11,11 +11,11 @@ class Edge:
 
     def __repr__(self):
         if self._style != '':
-            return "\\Edge[style=%s](%s)(%s)" %\
-                    (self._style, self._start, self._end)
+            return "\\Edge[style=%s](%s)(%s)\n" %\
+                    (self._style, self._start._name, self._end._name)
         else:
-            return "\\Edge(%s)(%s)" %\
-                    (self._start, self._end)
+            return "\\Edge(%s)(%s)\n" %\
+                    (self._start._name, self._end._name)
  
 
 
@@ -31,21 +31,21 @@ class Loop:
     _side = ''
 
     def __init__(self, node, dist='2cm', loop_dir='SO', side='east'):
-        _node = node
-        _dist = dist
-        _loop_dir = loop_dir
-        _side = side
+        self._node = node
+        self._dist = dist
+        self._loop_dir = loop_dir
+        self._side = side
 
     def __repr__(self):
-        return "\\Loop[dist=%s, dir=%s](%s.%s)\n" \
-                (self._dist, self._loop_dir, self._node, self._side)
+        return "\\Loop[dist=%s, dir=%s](%s.%s)\n" %\
+                (self._dist, self._loop_dir, self._node._name, self._side)
 
 class EdgeList:
     _edgelist = []
 
     def add_edge(self, edge):
         #Do we need to do any edge validation?
-        self._edgelist += edge
+        self._edgelist.append(edge)
 
     def get_tikz(self):
         output = ''
