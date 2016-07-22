@@ -30,6 +30,26 @@ class Loop:
     _loop_dir = ''
     _side = ''
 
+    def __init__(self, node, dist='2cm', loop_dir='SO', side='east'):
+        _node = node
+        _dist = dist
+        _loop_dir = loop_dir
+        _side = side
+
     def __repr__(self):
         return "\\Loop[dist=%s, dir=%s](%s.%s)\n" \
                 (self._dist, self._loop_dir, self._node, self._side)
+
+class EdgeList:
+    _edgelist = []
+
+    def add_edge(self, edge):
+        #Do we need to do any edge validation?
+        self._edgelist += edge
+
+    def get_tikz(self):
+        output = ''
+        for edge in self._edgelist:
+            output += repr(edge)
+
+        return output
