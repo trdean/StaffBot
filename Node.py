@@ -88,3 +88,10 @@ class NodeList:
         by looking at the node chosen
         '''
         return Edge.Loop(random.choice(self._nodelist))
+
+    def get_tikz(self):
+        output = ''
+        for node in self._nodelist:
+            output += repr(node)
+
+        return output
