@@ -1,5 +1,5 @@
 import abc
-import random
+import random, math
 import Edge
 
 class NodeBase:
@@ -16,8 +16,24 @@ class AbsNode(NodeBase):
     _x_location = 0
     _y_location = 0
 
+    def __init__(self, x, y, name, **kwargs):
+        self._x_location = x
+        self._y_location = y
+        self._name = name
+
+        if "shape" in kwargs:
+            self._shape = kwargs["shape"]
+        if "color" in kwargs:
+            self._color = kwargs["color"]
+        else:
+            self._color = "none"
+        if "text" in kwargs:
+            self._text = kwargs["text"]
+
+    #TODO: Make x and y properties and change edge distance code
+
     def __repr__(self):
-        return '\\node[draw,%s,%s] (%s) at (%d, %d) {%s};\n' %\
+        return '\\node[draw,%s,fill=%s] (%s) at (%d, %d) {%s};\n' %\
                 (self._shape, self._color, self._name, self._x_location,\
                 self._y_location, self._text)
 
@@ -58,10 +74,10 @@ class NodeList:
         if validate == True:
             raise NotImplementedError
 
-        self._nodelist += Node
+        self._nodelist.append(node)
         return True
 
-    def generate_random_edge(self,variance=self._variance):
+    def generate_random_edge(self,variance=_variance):
         '''
         Use rejection sampling to favor edges which are short in length. If we
         reject too many times then just accept. This should only take one to two
@@ -76,7 +92,7 @@ class NodeList:
 
             new_edge = Edge.Edge(start, end)
             reject_criteria = random.gauss(0, variance)
-            if new_edge.length() < math.abs(reject_criteria):
+            if new_edge.length() < abs(reject_criteria):
                 break
 
         return new_edge
