@@ -5,15 +5,26 @@ class Edge:
     _start = ''
     _end = ''
     _style = ''
+    _start_anchor = ''
+    _end_anchor = ''
     
-    def __init__(self, start, end):
+    def __init__(self, start, end,**kwargs):
         self._start = start
         self._end = end
+        if 'options' in kwargs:
+            self._style += kwargs['options']
+        if 'start_anchor' in kwargs:
+            self._start_anchor = '.%s' % kwargs['start_anchor']
+        if 'end_anchor' in kwargs:
+            self._end_anchor = '.%s' % kwargs['end_anchor']
+
+
 
     def __repr__(self):
         if self._style != '':
-            return "\\Edge[style=%s](%s)(%s)\n" %\
-                    (self._style, self._start._name, self._end._name)
+            return "\\Edge[style=%s](%s%s)(%s%s)\n" %\
+                    (self._style, self._start._name, self._start_anchor,\
+                    self._end._name,self._end_anchor)
         else:
             return "\\Edge(%s)(%s)\n" %\
                     (self._start._name, self._end._name)
