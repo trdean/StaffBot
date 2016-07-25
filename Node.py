@@ -130,7 +130,11 @@ class NodeList:
         TODO: Be smart about the direction of the loop and the size of the loop
         by looking at the node chosen
         '''
-        return Edge.Loop(random.choice(self._nodelist))
+        n = random.choice(self._nodelist)
+        if n.x < 7:
+            return Edge.Loop(n, loop_dir='NO', side='west')
+        else:
+            return Edge.Loop(n, loop_dir='SO', side='east')
 
     def get_tikz(self):
         output = ''

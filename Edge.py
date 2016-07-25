@@ -41,6 +41,10 @@ class Loop:
         return "\\Loop[dist=%s, dir=%s](%s.%s)\n" %\
                 (self._dist, self._loop_dir, self._node._name, self._side)
 
+    @property
+    def node(self):
+        return node
+
 class EdgeList:
     _edgelist = []
 

@@ -7,11 +7,13 @@ g = Graph.Graph()
 
 MAX_TRIES = 20
 
-shapes = ["diamond","rectangle","circle"]
-colors = ["blue!20", "red!20", "white"]
+shapes = ["diamond","rectangle","circle", "rectangle, rounded corners=0.8ex"]
+colors = ["blue!20", "red!20", "green!20", "white"]
 labels = ["Withdraw", "Endstate", "Aviation", "FPOL", "ADA", "Coordinate",\
         "Assess", "Threat CoA", "Civil Considerations", "Evaluate", "DPCIM",\
-        "Dispersed Attack", "Defense In Depth"]
+        "Dispersed Attack", "Defense In Depth", "Communicate", "SIGINT",\
+        "EW", "Tactical Risk", "Synchronization", "Doctrine", "Commander",\
+        "Headquarter", "Space", "Cyber"]
 for i in range(10):
     added = False
     for j in range(MAX_TRIES):
