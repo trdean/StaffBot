@@ -13,7 +13,8 @@ class Graph:
 \usetikzlibrary{shapes}
 \\tikzset{EdgeStyle/.append style = {->, bend left}}
 \\begin{document}
-\\begin{tikzpicture}\n'''
+\\begin{tikzpicture}[
+block/.style={draw,text width=70,align=center},font=\small]\n'''
     _formating_options = ''
     _footer = '''\end{tikzpicture}\n\end{document}'''
 

@@ -47,7 +47,7 @@ class AbsNode(NodeBase):
         return math.sqrt( dx**2 + dy**2 )
 
     def __repr__(self):
-        return '\\node[draw,%s,fill=%s] (%s) at (%d, %d) {%s};\n' %\
+        return '\\node[block,%s,fill=%s] (%s) at (%d, %d) {%s};\n' %\
                 (self._shape, self._color, self._name, self._x_location,\
                 self._y_location, self._text)
 
@@ -58,7 +58,7 @@ class ParentRelNode(NodeBase):
     '''
 
     def __repr__(self):
-        return '\\node[draw,%s,%s] (%s) {%s};\n' %\
+        return '\\node[block,%s,%s] (%s) {%s};\n' %\
                 (self._shape, self._color, self._name,\
                 self._text)
 
@@ -80,7 +80,7 @@ class NodeList:
     TODO: Check if the graph is partitioned?
     '''
     _nodelist = []
-    _variance = 1.50
+    _variance = 1.33
 
     def __iter__(self):
         return iter(self._nodelist)
