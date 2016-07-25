@@ -13,9 +13,13 @@ labels = ["Withdraw", "Endstate", "Aviation", "FPOL", "ADA", "Coordinate",\
         "Assess", "Threat CoA", "Civil Considerations", "Evaluate", "DPCIM",\
         "Dispersed Attack", "Defense In Depth", "Communicate", "SIGINT",\
         "EW", "Tactical Risk", "Synchronization", "Doctrine", "Commander",\
-        "Headquarter", "Space", "Cyber"]
+        "Headquarters", "Space", "Cyber"]
+
 for i in range(10):
     added = False
+    #Try to place the node MAX_TRIES number of times.  After that just give up,
+    #the graph is probably too crowded already.  Condition for successful
+    #placement is being at least a distance of three away from another node
     for j in range(MAX_TRIES):
         name = "a%d" % i
         n = Node.AbsNode(random.randint(0,12),random.randint(0,14),name,\
@@ -25,7 +29,7 @@ for i in range(10):
         if g._nodelist.add_node(n,validate=True) == True:
             break
 
-for i in range(11):
+for i in range(9):
     e = g._nodelist.generate_random_edge()
     g._edgelist.add_edge(e)
 
