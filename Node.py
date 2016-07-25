@@ -56,9 +56,18 @@ class ParentRelNode(NodeBase):
     If you're using relative positioning, you have one parent node with 
     no location
     '''
+    def __init__(self,name,**kwargs):
+        self._name = name
+        if "color" in kwargs:
+            self._color = kwargs["color"]
+        if "text" in kwargs:
+            self._text = kwargs["text"]
+        if "shape" in kwargs:
+            self._shape = kwargs["shape"]
+
 
     def __repr__(self):
-        return '\\node[block,%s,%s] (%s) {%s};\n' %\
+        return '\\node[block,%s,fill=%s] (%s) {%s};\n' %\
                 (self._shape, self._color, self._name,\
                 self._text)
 
@@ -69,9 +78,26 @@ class RelNode(NodeBase):
     '''
     _location = ''
 
+    def __init__(self,location,name,**kwargs):
+        self._location = location
+        self._name = name
+        if "color" in kwargs:
+            self._color = kwargs["color"]
+        if "text" in kwargs:
+            self._text = kwargs["text"]
+        if "shape" in kwargs:
+            self._shape = kwargs["shape"]
+
+ 
     def __repr__(self):
-        return '\\node[draw,%s,%s,%s] (%s) {%s};\n' %\
-                (self._shape, self._color, self._location, self._name,\
+        options = ''
+        if self._color != '':
+            options += ",fill=%s" % self._color
+        if self._shape != '':
+            options += ",%s" % self._shape
+
+        return '\\node[draw%s,%s] (%s) {%s};\n' %\
+                (options, self._location, self._name,\
                 self._text)
 
 
