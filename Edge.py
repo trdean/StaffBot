@@ -70,7 +70,8 @@ class EdgeList:
                 new = node
                 while new == node:
                     new = random.choice(nodelist)
-                nodelist.add_node(new)
+                e = Edge(node, new)
+                self.add_edge(e)
 
 
     def get_tikz(self):
