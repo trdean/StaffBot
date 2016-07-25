@@ -28,5 +28,7 @@ class Graph:
         output = self._header + self._formating_options
         output += self._nodelist.get_tikz()
         output += self._edgelist.get_tikz()
+        #Redraw the nodes so they sit on top of the edges
+        output += self._nodelist.get_tikz()
         output += self._footer
         return output
