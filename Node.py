@@ -33,7 +33,18 @@ class AbsNode(NodeBase):
         if "text" in kwargs:
             self._text = kwargs["text"]
 
-    #TODO: Make x and y properties and change edge distance code
+    @property
+    def x(self):
+        return self._x_location
+
+    @property
+    def y(self):
+        return self._y_location
+
+    def distance_from(self, other_node):
+        dx = self._x_location - other_node.x
+        dy = self._y_location - other_node.y
+        return math.sqrt( dx**2 + dy**2 )
 
     def __repr__(self):
         return '\\node[draw,%s,fill=%s] (%s) at (%d, %d) {%s};\n' %\
@@ -87,7 +98,9 @@ class NodeList:
         node list and return false.  Otherwise, add and return true
         '''
         if validate == True:
-            raise NotImplementedError
+            for existing_node in self._nodelist:
+                if node.distance_from(existing_node) < 3:
+                    return False
 
         self._nodelist.append(node)
         return True
@@ -99,7 +112,6 @@ class NodeList:
         iterations if the input variance is around the average distance between
         node
         '''
-
         new_edge = None
         for i in range(40):
             #Pick two nodes uniformly without replacement

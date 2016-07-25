@@ -21,8 +21,8 @@ class Edge:
 
 
     def length(self):
-        dx = self._start._x_location - self._end._x_location
-        dy = self._start._y_location - self._end._y_location
+        dx = self._start.x - self._end.x
+        dy = self._start.y - self._end.y
         return math.sqrt( dx**2 + dy**2 )
 
 class Loop:

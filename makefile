@@ -2,7 +2,8 @@ TARGET = StaffBot
 
 all: $(TARGET)
 
-$(TARGET): $(TARGET).tex
+$(TARGET): 
+	python $(TARGET).py >$(TARGET).tex;pdflatex $(TARGET).tex
 
 view:
 	open $(TARGET).pdf
