@@ -11,14 +11,16 @@ class Graph:
     _header = '''\documentclass{article}
 \usepackage{graphics,tikz,tkz-graph}
 \usetikzlibrary{shapes}
-\\tikzset{EdgeStyle/.append style = {->, bend left}}
 \\begin{document}
 \\begin{tikzpicture}[
 block/.style={draw,text width=70,align=center},font=\small]\n'''
     _formating_options = ''
     _footer = '''\end{tikzpicture}\n\end{document}'''
 
-    def __init__(self):
+    def __init__(self, bend_arrows=True):
+        if bend_arrows:
+            self._formating_options = '\\tikzset{EdgeStyle/.append style = {->,\
+            bend left}}'
         self._edgelist = Edge.EdgeList()
         self._nodelist = Node.NodeList()
 
