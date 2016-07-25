@@ -1,4 +1,5 @@
 import math
+import random
 
 class Edge:
     _start = ''
@@ -46,6 +47,31 @@ class EdgeList:
     def add_edge(self, edge):
         #Do we need to do any edge validation?
         self._edgelist.append(edge)
+        try:
+            edge._start._edges.append(edge)
+            edge._end._edges.append(edge)
+        except AttributeError:
+            pass
+
+    def fix_edges(self, nodelist, allow_partitions=True):
+        '''
+        Checks all nodes to see if they are degree zero and randomly
+        give them an edge
+        TODO: Check if the graph is partitioned
+        '''
+        if allow_partitions == False:
+            raise NotImplementedError
+
+        if len(nodelist) < 2:
+            return 
+
+        for node in nodelist:
+            if len(node._edges) == 0:
+                new = node
+                while new == node:
+                    new = random.choice(nodelist)
+                nodelist.add_node(new)
+
 
     def get_tikz(self):
         output = ''
