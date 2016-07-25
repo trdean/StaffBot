@@ -9,6 +9,8 @@ class NodeBase:
     _text = ''
     _name = ''
 
+    _edges = []
+
 class AbsNode(NodeBase):
     '''
     Node with absolute positioning
@@ -17,6 +19,7 @@ class AbsNode(NodeBase):
     _y_location = 0
 
     def __init__(self, x, y, name, **kwargs):
+        self._edges = []
         self._x_location = x
         self._y_location = y
         self._name = name
@@ -62,8 +65,20 @@ class RelNode(NodeBase):
 
 
 class NodeList:
+    '''
+    TODO: Check if the graph is partitioned?
+    '''
     _nodelist = []
-    _variance = 1.33
+    _variance = 1.50
+
+    def __iter__(self):
+        return iter(self._nodelist)
+
+    def __len__(self):
+        return len(self._nodelist)
+
+    def __getitem__(self,key):
+        return self._nodelist[key]
 
     def add_node(self, node, validate=False):
         '''
