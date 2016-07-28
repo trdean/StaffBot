@@ -6,7 +6,7 @@ chart_depth = 0
 branch_prob = [0, 0.3, 0.20, 0]
 merge_prob = [0, 0.2, 0.2]
 recurse_left_prob = 0.5
-recurse_right_prob = 0.9
+recurse_right_prob = 0.5
 
 g = Graph.Graph(bend_arrows=False)
 
@@ -25,7 +25,7 @@ output += 'absorbingstate/.style={draw, rectangle, rounded corners=1.5ex, fill=w
 output += 'decision/.style={draw, diamond, fill=blue!20},\n'
 output += 'state/.style={draw, rectangle, rounded corners=0.8ex, fill=green!20},\n'
 output += 'block/.style={draw,trapezium, trapezium left angle=70,\
-trapezium right angle=-70, fill=white},\n'
+trapezium right angle=-70, fill=red!20},\n'
 output += 'line/.style={draw, -latex\'}]\n'
 output += '\\matrix [column sep=1cm, row sep=1cm] {\n'
 for i, row in enumerate(m.matrix):
@@ -91,8 +91,8 @@ if random.random() < recurse_right_prob:
     if c_end != 1:
         end = random.choice(range(1,start))
         end_column = m.row_width(end)
-        output += "\path [line] (%db%d) -- ++(4,0) |- (%db%d);\n" % \
-                (start,column, end, end_column)
+        output += "\path [line] (%db%d) -- ++(%d,0) |- (%db%d);\n" % \
+                (start,column,end_column+1, end, end_column)
 
 
 output += '\\end{tikzpicture}\n\\end{document}\n'
