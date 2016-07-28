@@ -12,6 +12,7 @@ class Graph:
 \usepackage{graphics,tikz,tkz-graph}
 \usetikzlibrary{shapes}
 \usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
 \\begin{document}
 \\begin{tikzpicture}[
 block/.style={draw,text width=70,align=center},font=\small]\n'''
@@ -22,9 +23,9 @@ block/.style={draw,text width=70,align=center},font=\small]\n'''
         
         self._formating_options = '\\tikzset{EdgeStyle/.append style = {->'
         if bend_arrows:
-            self._formating_options += ',bend left}}'
+            self._formating_options += ',bend left}}\n'
         else:
-            self._formating_options += '}}'
+            self._formating_options += '}}\n'
         self._edgelist = Edge.EdgeList()
         self._nodelist = Node.NodeList()
 
