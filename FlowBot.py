@@ -88,7 +88,7 @@ if random.random() < recurse_right_prob:
     c_end = m.column_end(column)
 
     start = random.choice(range(c_start,c_end))
-    if c_end != 1:
+    if start != 1:
         end = random.choice(range(1,start))
         end_column = m.row_width(end)
         output += "\path [line] (%db%d) -- ++(%d,0) |- (%db%d);\n" % \
