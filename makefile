@@ -1,12 +1,14 @@
-TARGET = StaffBot
+scatter:	
+	python ScatterBot.py > scatter.tex; pdflatex scatter.tex
 
-all: $(TARGET)
+vs:
+	open scatter.pdf
 
-$(TARGET): 
-	python $(TARGET).py >$(TARGET).tex;pdflatex $(TARGET).tex
+flow:
+	python FlowBot.py > flow.tex; pdflatex flow.tex
 
-view:
-	open $(TARGET).pdf
+vf:
+	open flow.pdf
 
 clean:
 	rm -f *.tex *.pyc *.aux *.bbl *.blg *.log *.pdf *.dvi
