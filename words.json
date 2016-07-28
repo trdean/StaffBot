@@ -1,0 +1,42 @@
+{"decision":
+	[
+		"Observe",
+		"Orient",
+		"Decide",
+		"Act",
+		"Assess",
+		"Sync",
+		"Reconn"
+	],
+"block":
+	[
+		"Withdraw",
+		"FPOL",
+		"RPOL",
+		"Canlize",
+		"Deny",
+		"Turn",
+		"Block",
+		"Defend"
+	],
+"state":
+	[
+		"Attack",
+		"Destroy",
+		"Breach",
+		"Fix",
+		"Subvert",
+		"Influnce",
+		"Inform",
+		"Cyber"
+	],
+"start":
+	[
+		"SP"
+	],
+"end":
+	[
+		"Restablish BP"
+	]
+}
+

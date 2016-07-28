@@ -25,8 +25,10 @@ class Matrix:
     def __init__(self):
         #Start on left side, top left is state, bottom left is state
         for x in range(self.depth):
-            if x == 0 or x == self.depth-1:
-                self.matrix[x][0] = "absorbingstate"
+            if x == 0:
+                self.matrix[x][0] = "start"
+            elif x == self.depth - 1:
+                self.matrix[x][0] = "end"
             else:
                 self.matrix[x][0] = self.random_node()
 

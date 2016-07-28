@@ -1,4 +1,4 @@
-import Node, Edge, Graph, Matrix
+import Node, Edge, Graph, Matrix, WordChoice
 import random
 
 branch_depth = 1
@@ -21,7 +21,8 @@ output += '\usetikzlibrary{positioning}\n'
 output += '\usetikzlibrary{matrix}\n'
 output += '\\begin{document}\n'
 output += '\\begin{tikzpicture}[\n'
-output += 'absorbingstate/.style={draw, rectangle, rounded corners=1.5ex, fill=white},\n'
+output += 'start/.style={draw, rectangle, rounded corners=1.5ex, fill=white},\n'
+output += 'end/.style={draw, rectangle, rounded corners=1.5ex, fill=white},\n'
 output += 'decision/.style={draw, diamond, fill=blue!20},\n'
 output += 'state/.style={draw, rectangle, rounded corners=0.8ex, fill=green!20},\n'
 output += 'block/.style={draw,trapezium, trapezium left angle=70,\
@@ -31,7 +32,8 @@ output += '\\matrix [column sep=1cm, row sep=1cm] {\n'
 for i, row in enumerate(m.matrix):
     for j,node in enumerate(row):
         if node != '':
-            output += "\\node[%s] (%db%d) {%s}; " % (node, i,j, node)
+            word = WordChoice.pick_word(node)
+            output += "\\node[%s] (%db%d) {%s}; " % (node, i,j, word)
 
         if j != len(row) - 1:
             output += "& "
