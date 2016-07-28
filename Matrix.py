@@ -34,6 +34,10 @@ class Matrix:
         for x in range(1,self.depth-1):
             for y in range(1,self.width):
                 if self.matrix[x-1][y] != "":
+                    if random.random() < 0.3 and self.matrix[x][y-1] !=\
+                    "decision":
+                        continue
+
                     self.matrix[x][y] = self.random_node(include_decision=False)
                     continue
 

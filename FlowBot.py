@@ -44,13 +44,18 @@ for i, row in enumerate(m.matrix[1:]):
     output += "\path [line] (%db%d) -- (%db%d);\n" % (i,0,i+1,0)
     for j, node in enumerate(row[1:]):
         if node == '':
-            continue
+            if m.matrix[i][j+1] != '':
+                next_box = m.row_width(i+1)
+                output += "\path [line] (%db%d) |- (%db%d);\n" %\
+                (i,j+1,i+1,next_box)
+            else:
+                continue
         #j is index minus one since list is sliced from 1:
         if row[j] == 'decision':
             output += "\path [line] (%db%d) -- (%db%d);\n" % (i+1,j,i+1,j+1)
         if m.matrix[i][j+1] != '' and row[j+1] != '':
             output += "\path [line] (%db%d) -- (%db%d);\n" % (i,j+1,i+1,j+1)
-
+            
 #draw bottom arrows
 for i, node in enumerate(m.matrix[-2][1:]):
     if node != '':
@@ -82,17 +87,19 @@ if random.random() < recurse_left_prob:
         output += "\path [line] (%db0) -- ++(-2,0) |- (%db0);\n" % (start,\
                 end) 
 
+#Now do the same from the right side
 if random.random() < recurse_right_prob:
     column = m.node_width
     c_start = m.column_start(column)
     c_end = m.column_end(column)
 
     start = random.choice(range(c_start,c_end))
+    start_column = m.row_width(start)
     if start != 1:
         end = random.choice(range(1,start))
         end_column = m.row_width(end)
         output += "\path [line] (%db%d) -- ++(%d,0) |- (%db%d);\n" % \
-                (start,column,end_column+1, end, end_column)
+                (start,start_column,column+1, end, end_column)
 
 
 output += '\\end{tikzpicture}\n\\end{document}\n'
