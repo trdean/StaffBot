@@ -1,42 +1,99 @@
-import Node, Edge, Graph
+import Node, Edge, Graph, Matrix
 import random
 
-branch_depth = 0
+branch_depth = 1
 chart_depth = 0
-branch_prob = [0.25, 0.1, 0]
+branch_prob = [0, 0.3, 0.20, 0]
 merge_prob = [0, 0.2, 0.2]
-recurse_prob = 0.3
+recurse_left_prob = 0.5
+recurse_right_prob = 0.9
 
 g = Graph.Graph(bend_arrows=False)
 
-n = Node.ParentRelNode("c0", shape="rectangle", color="white", text="Parent")
+n = Node.ParentRelNode("c0b0", shape="rectangle", color="white", text="Parent")
 g._nodelist.add_node(n)
 
-while chart_depth < 9:
-    name = "c%d" % (chart_depth+1)
-    text = "Child %d,%d" % (chart_depth, branch_depth)
-    location = "below=1cm of c%d.south" % (chart_depth)
+m = Matrix.Matrix()
+output = '\documentclass{article}\n'
+output += '\usepackage{graphics,tikz,tkz-graph}\n'
+output += '\usetikzlibrary{shapes}\n'
+output += '\usetikzlibrary{positioning}\n'
+output += '\usetikzlibrary{matrix}\n'
+output += '\\begin{document}\n'
+output += '\\begin{tikzpicture}[\n'
+output += 'absorbingstate/.style={draw, rectangle, rounded corners=1.5ex, fill=white},\n'
+output += 'decision/.style={draw, diamond, fill=blue!20},\n'
+output += 'state/.style={draw, rectangle, rounded corners=0.8ex, fill=green!20},\n'
+output += 'block/.style={draw,trapezium, trapezium left angle=70,\
+trapezium right angle=-70, fill=white},\n'
+output += 'line/.style={draw, -latex\'}]\n'
+output += '\\matrix [column sep=1cm, row sep=1cm] {\n'
+for i, row in enumerate(m.matrix):
+    for j,node in enumerate(row):
+        if node != '':
+            output += "\\node[%s] (%db%d) {%s}; " % (node, i,j, node)
 
-    if random.random() < branch_prob[branch_depth]:
-        shape = "diamond"
-        n = Node.RelNode(location,name, shape=shape, color="white",text=text)
-        g._nodelist.add_node(n)
+        if j != len(row) - 1:
+            output += "& "
+    output += "\\\\\n"
 
-        if random.random() < recurse_prob and chart_depth > 0:
-            end = random.randint(0,chart_depth-1)
-            e =\
-            Edge.Edge(g._nodelist[chart_depth+1],g._nodelist[end],\
-            options='bend left',start_anchor='west',end_anchor='west')
-            g._edgelist.add_edge(e)
+output += '};\n'
+
+for i, row in enumerate(m.matrix[1:]):
+    #First row must have stuff in every square
+    output += "\path [line] (%db%d) -- (%db%d);\n" % (i,0,i+1,0)
+    for j, node in enumerate(row[1:]):
+        if node == '':
+            continue
+        #j is index minus one since list is sliced from 1:
+        if row[j] == 'decision':
+            output += "\path [line] (%db%d) -- (%db%d);\n" % (i+1,j,i+1,j+1)
+        if m.matrix[i][j+1] != '' and row[j+1] != '':
+            output += "\path [line] (%db%d) -- (%db%d);\n" % (i,j+1,i+1,j+1)
+
+#draw bottom arrows
+for i, node in enumerate(m.matrix[-2][1:]):
+    if node != '':
+        output += "\path [line] (%db%d) |- (%db%d);\n" % \
+                (len(m.matrix)-2,i+1,len(m.matrix)-1,0)
+
+#Pick arrows going backwards
+if random.random() < recurse_left_prob:
+    first_decision = -1
+    for i, row in enumerate(m.matrix):
+        if row[0] == "decision":
+            first_decision = i
+
+    #case 1: no branches, pick random recursion
+    if first_decision == -1:
+        nodes = random.sample(range(1,len(m.matrix)),2)
+        nodes.sort()
+        output += "\path [line] (%db0) -- ++(-2,0) |- (%db0);\n" % (nodes[1],\
+                nodes[0]) 
     else:
-        shape = "rectangle"
-        n = Node.RelNode(location,name, shape=shape, color="white",text=text)
-        g._nodelist.add_node(n)
+        #pick recursion on left, start below last branch, end above first branch
+        end = 1
+        if first_decision != 1:
+            end = random.choice(range(1,first_decision))
+        if first_decision == (len(m.matrix) - 1):
+            start = first_decision
+        else:
+            start = random.choice(range(first_decision, len(m.matrix)-1))
+        output += "\path [line] (%db0) -- ++(-2,0) |- (%db0);\n" % (start,\
+                end) 
 
-    chart_depth += 1
+if random.random() < recurse_right_prob:
+    column = m.node_width
+    c_start = m.column_start(column)
+    c_end = m.column_end(column)
 
-for i in range(len(g._nodelist[:-1])):
-    e = Edge.Edge(g._nodelist[i], g._nodelist[i+1])
-    g._edgelist.add_edge(e)
+    start = random.choice(range(c_start,c_end))
+    if c_end != 1:
+        end = random.choice(range(1,start))
+        end_column = m.row_width(end)
+        output += "\path [line] (%db%d) -- ++(4,0) |- (%db%d);\n" % \
+                (start,column, end, end_column)
 
-print g.get_tikz()
+
+output += '\\end{tikzpicture}\n\\end{document}\n'
+print output
