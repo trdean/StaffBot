@@ -1,6 +1,6 @@
 # StaffBof
 
-#H2 ScatterBot
+## ScatterBot
 
 Produces random chart where the nodes are placed uniformly at random
 
@@ -8,7 +8,7 @@ ScatterBot.py outputs LaTex
 
 Need to work on language models
 
-#H2 FlowBot 
+## FlowBot 
 
 Creates random linear flow chart
 
